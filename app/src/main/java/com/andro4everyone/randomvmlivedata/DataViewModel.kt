@@ -1,8 +1,9 @@
 package com.andro4everyone.randomvmlivedata
 
-import android.util.Log
+import androidx.lifecycle.ViewModel
 
-class DataViewModel {
+//Extends ViewModel to keep out data intact
+class DataViewModel: ViewModel() {
 
     private lateinit var myRandomNumber: String
 
