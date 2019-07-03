@@ -3,11 +3,11 @@ package com.andro4everyone.randomvmlivedata
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    lateinit var data: DataViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,9 +17,13 @@ class MainActivity : AppCompatActivity() {
         val model = ViewModelProviders.of(this).get(DataViewModel::class.java)
         val myRandomNumber = model.getNumber()
 
-        //Calling data without ViewModel implementation
-//        data = DataViewModel()
-//        var myRandomNumber = data.getNumber()
-        tvNumber.text = myRandomNumber
+        //setting observer for data change of myRandomNumber LiveData in DataViewModel class
+        myRandomNumber.observe(this, Observer<String> { number ->
+            tvNumber.text = number
+        })
+
+        btnRandom.setOnClickListener {
+            model.createNumber()
+        }
     }
 }
